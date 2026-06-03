@@ -1,10 +1,10 @@
 # GRAF Triage Management System
-# This is a simple console-based triage management system for a hospital emergency department. It allows users to add patients, view the triage queue, and serve patients based on their priority level determined by their vital signs (heart rate and breathing rate).
+# This is a simple console-based triage management system for a hospital emergency department. It allows users to add patients, view the triage queue, and serve patients based on their priority level determined by their vital signs (heart rate, breathing rate, and temperature).
 
-def assess_priority(heart_rate, breathing_rate):
-    if heart_rate > 120 or heart_rate < 50 or breathing_rate > 30 or breathing_rate < 10:
+def assess_priority(heart_rate, breathing_rate, temperature):
+    if heart_rate > 120 or heart_rate < 50 or breathing_rate > 30 or breathing_rate < 10 or temperature > 40 or temperature < 36:
         return "High", 1
-    elif (100 <= heart_rate <= 120) or (50 <= heart_rate <= 60) or (20 <= breathing_rate <= 30):
+    elif (100 <= heart_rate <= 120) or (50 <= heart_rate <= 60) or (20 <= breathing_rate <= 30) or (38 <= temperature <= 40):
         return "Medium", 2
     else:
         return "Low", 3
@@ -15,13 +15,15 @@ def add_patient(patients):
 
     heart_rate = int(input("Please enter heart rate (bpm): "))
     breathing_rate = int(input("Please enter breathing rate (per min): "))
+    temperature = int(input("Please enter temperature (°C): "))
 
-    priority, rank = assess_priority(heart_rate, breathing_rate)
+    priority, rank = assess_priority(heart_rate, breathing_rate, temperature)
 
     patient = {
         "name": name,
         "heart_rate": heart_rate,
         "breathing_rate": breathing_rate,
+        "temperature": temperature,
         "priority": priority,
         "priority_rank": rank
     }
@@ -29,7 +31,7 @@ def add_patient(patients):
     patients.append(patient)
 
     print(f"\nPatient added: {name}")
-    print(f"Vital Signs → Heart_Rate: {heart_rate}, Breathing_Rate: {breathing_rate}")
+    print(f"Vital Signs → Heart_Rate: {heart_rate}, Breathing_Rate: {breathing_rate}, Temperature: {temperature}")
     print(f"Assigned Priority: {priority}\n")
 
 
@@ -42,7 +44,7 @@ def view_queue(patients):
 
     print("\n===> GRAF technologies Triage Queue ===>")
     for i, p in enumerate(sorted_patients):
-        print(f"{i+1}. {p['name']} | HR:{p['heart_rate']} RR:{p['breathing_rate']} | {p['priority']}")
+        print(f"{i+1}. {p['name']} | HR:{p['heart_rate']} RR:{p['breathing_rate']} T:{p['temperature']} | {p['priority']}")
     print()
 
 
@@ -59,6 +61,7 @@ def serve_patient(patients):
     print(f"Name: {patient['name']}")
     print(f"Heart Rate: {patient['heart_rate']}")
     print(f"Breathing Rate: {patient['breathing_rate']}")
+    print(f"Temperature: {patient['temperature']}")
     print(f"Priority: {patient['priority']}\n")
 
 
