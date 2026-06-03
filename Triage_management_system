@@ -1,3 +1,6 @@
+# GRAF Triage Management System
+# This is a simple console-based triage management system for a hospital emergency department. It allows users to add patients, view the triage queue, and serve patients based on their priority level determined by their vital signs (heart rate and breathing rate).
+
 def assess_priority(heart_rate, breathing_rate):
     if heart_rate > 120 or heart_rate < 50 or breathing_rate > 30 or breathing_rate < 10:
         return "High", 1
@@ -8,10 +11,10 @@ def assess_priority(heart_rate, breathing_rate):
 
 
 def add_patient(patients):
-    name = input("Enter patient name: ")
+    name = input("Please enter patient name: ")
 
-    heart_rate = int(input("Enter heart rate (bpm): "))
-    breathing_rate = int(input("Enter breathing rate (per min): "))
+    heart_rate = int(input("Please enter heart rate (bpm): "))
+    breathing_rate = int(input("Please enter breathing rate (per min): "))
 
     priority, rank = assess_priority(heart_rate, breathing_rate)
 
@@ -26,7 +29,7 @@ def add_patient(patients):
     patients.append(patient)
 
     print(f"\nPatient added: {name}")
-    print(f"Vital Signs → HR: {heart_rate}, RR: {breathing_rate}")
+    print(f"Vital Signs → Heart_Rate: {heart_rate}, Breathing_Rate: {breathing_rate}")
     print(f"Assigned Priority: {priority}\n")
 
 
@@ -37,7 +40,7 @@ def view_queue(patients):
 
     sorted_patients = sorted(patients, key=lambda x: x["priority_rank"])
 
-    print("\n===> GRAF Triage Queue ===>")
+    print("\n===> GRAF technologies Triage Queue ===>")
     for i, p in enumerate(sorted_patients):
         print(f"{i+1}. {p['name']} | HR:{p['heart_rate']} RR:{p['breathing_rate']} | {p['priority']}")
     print()
@@ -60,7 +63,7 @@ def serve_patient(patients):
 
 
 def main():
-    print("===> GRAF Triage Management System ===>")
+    print("===> GRAF Technologies Triage Management System ===>")
 
     patients = []
 
@@ -82,7 +85,7 @@ def main():
             print("Goodbye!")
             break
         else:
-            print("Invalid choice. Try again.\n")
+            print("Sorry Invalid choice. Please try again.\n")
 
 
 if __name__ == "__main__":
