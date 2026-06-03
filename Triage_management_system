@@ -1,0 +1,89 @@
+def assess_priority(heart_rate, breathing_rate):
+    if heart_rate > 120 or heart_rate < 50 or breathing_rate > 30 or breathing_rate < 10:
+        return "High", 1
+    elif (100 <= heart_rate <= 120) or (50 <= heart_rate <= 60) or (20 <= breathing_rate <= 30):
+        return "Medium", 2
+    else:
+        return "Low", 3
+
+
+def add_patient(patients):
+    name = input("Enter patient name: ")
+
+    heart_rate = int(input("Enter heart rate (bpm): "))
+    breathing_rate = int(input("Enter breathing rate (per min): "))
+
+    priority, rank = assess_priority(heart_rate, breathing_rate)
+
+    patient = {
+        "name": name,
+        "heart_rate": heart_rate,
+        "breathing_rate": breathing_rate,
+        "priority": priority,
+        "priority_rank": rank
+    }
+
+    patients.append(patient)
+
+    print(f"\nPatient added: {name}")
+    print(f"Vital Signs → HR: {heart_rate}, RR: {breathing_rate}")
+    print(f"Assigned Priority: {priority}\n")
+
+
+def view_queue(patients):
+    if len(patients) == 0:
+        print("No patients in queue.\n")
+        return
+
+    sorted_patients = sorted(patients, key=lambda x: x["priority_rank"])
+
+    print("\n===> GRAF Triage Queue ===>")
+    for i, p in enumerate(sorted_patients):
+        print(f"{i+1}. {p['name']} | HR:{p['heart_rate']} RR:{p['breathing_rate']} | {p['priority']}")
+    print()
+
+
+def serve_patient(patients):
+    if len(patients) == 0:
+        print("No patients to serve.\n")
+        return
+
+    patients.sort(key=lambda x: x["priority_rank"])
+
+    patient = patients.pop(0)
+
+    print("\nNOW SERVING PATIENT")
+    print(f"Name: {patient['name']}")
+    print(f"Heart Rate: {patient['heart_rate']}")
+    print(f"Breathing Rate: {patient['breathing_rate']}")
+    print(f"Priority: {patient['priority']}\n")
+
+
+def main():
+    print("===> GRAF Triage Management System ===>")
+
+    patients = []
+
+    while True:
+        print("1. Add Patient")
+        print("2. View Queue")
+        print("3. Serve Next Patient")
+        print("4. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            add_patient(patients)
+        elif choice == "2":
+            view_queue(patients)
+        elif choice == "3":
+            serve_patient(patients)
+        elif choice == "4":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Try again.\n")
+
+
+if __name__ == "__main__":
+    main()
